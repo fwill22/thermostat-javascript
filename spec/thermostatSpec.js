@@ -13,5 +13,19 @@ describe('Thermostat', function() {
       expect(thermostat.temperature).toEqual(20)
     });
   });
+
+  describe("Changing temperature", function() {
+    it('can increase the temperature', function() {
+      thermostat.increaseTemp()
+      expect(thermostat.temperature).toEqual(21)
+    });
+
+    it('can decrease the temperature', function() {
+      thermostat.decreaseTemp()
+      expect(thermostat.temperature).toEqual(19)
+    });
+
+
+  });
  
 });
