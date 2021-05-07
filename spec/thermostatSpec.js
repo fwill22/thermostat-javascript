@@ -12,9 +12,16 @@ describe('Thermostat', function() {
     it('starts with a default temperature of 20', function() {
       expect(thermostat.temperature).toEqual(20)
     });
+    it('starts with power saving mode on', function() {
+      expect(thermostat.powerSavingMode).toEqual(true)
+    });
   });
 
   describe("Changing temperature", function() {
+    it('returns the current temperature', function() {
+      expect(thermostat.getCurrentTemperature()).toEqual(thermostat.temperature)
+    });
+
     it('can increase the temperature', function() {
       thermostat.increaseTemp()
       expect(thermostat.temperature).toEqual(21)
@@ -33,9 +40,19 @@ describe('Thermostat', function() {
       expect(thermostat.temperature).toEqual(10)
     });
 
+    it('can reset the temperature to 20', function() {
+      thermostat.increaseTemp()
+      thermostat.reset()
+      expect(thermostat.temperature).toEqual(20)
+    });
+
   });
 
   describe("Power Saving Mode", function() {
+    it('can return the status of Power Saving Mode', function() {
+      expect(thermostat.getPowerSavingMode()).toEqual(thermostat.powerSavingMode)
+    });
+
     it('can be turned off', function() {
       thermostat.switchOffPowerSave()
       expect(thermostat.powerSavingMode).toEqual(false)
@@ -64,6 +81,23 @@ describe('Thermostat', function() {
       expect(thermostat.temperature).toEqual(32)
     });
 
+  });
+
+  describe("Energy usage", function() {
+    it('returns "low-usage" when temperature < 18', function() {
+      let thermostatLow = new Thermostat(17, true, 25)
+      expect(thermostatLow.energyUsage()).toEqual("low-usage")
+    });
+
+    it('returns "medium-usage" when temperature <= 25', function() {
+      let thermostatMid = new Thermostat(25, true, 25)
+      expect(thermostatMid.energyUsage()).toEqual("medium-usage")
+    });
+
+    it('returns "high-usage" when temperature is > 25', function() {
+      let thermostatHigh = new Thermostat(28, false, 32)
+      expect(thermostatHigh.energyUsage()).toEqual("high-usage")
+    });
   });
  
 });
