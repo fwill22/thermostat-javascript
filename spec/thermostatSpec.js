@@ -15,6 +15,10 @@ describe('Thermostat', function() {
     it('starts with power saving mode on', function() {
       expect(thermostat.powerSavingMode).toEqual(true)
     });
+    it('sets the maximum temperature based on PSM', function() {
+      thermostat.switchOffPowerSave()
+      expect(thermostat.maximumTemperature).toEqual(32)
+    })
   });
 
   describe("Changing temperature", function() {
@@ -65,6 +69,7 @@ describe('Thermostat', function() {
     });
 
     it('when switched on, sets maximum temperature to 25', function() {
+      console.log(thermostat)
       let i;
       for(i = 0; i <= 10; i++) {
         thermostat.increaseTemp();
